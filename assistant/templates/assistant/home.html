@@ -1,98 +1,94 @@
 {% extends 'assistant/base.html' %}
-{% block title %} Home {% endblock %}
+{% block title %}
+  Home
+{% endblock %}
 {% block content %}
-<div class="header">
-</div>
-<div class="content">
-  <div class="left">
-    <form action="/generate/" method="POST">
+  <div class="header"></div>
+  <div class="content">
+    <div class="left">
+      <form action="/generate/" method="POST">
+        <div class="left-bar-item">
+          <label class="title-select">Name</label>
+          <div class="input-title">
+            <input class="title-show" rows="1" maxlength="300" id="name" name="name" autocomplete="off" type="text" value=" {% if name %}{{ name }}{% endif %}" />
+          </div>
+        </div>
 
-      <div class="left-bar-item">
-        <label class="title-select">Name</label>
-        <div class="input-title">
-          <input class="title-show" rows="1" maxlength="300" id="name" name="name" autocomplete="off" type="text"
-                value=" {% if name %}{{name }}{% endif %}" />
+        <div class="left-bar-item">
+          <label class="title-select">Phone</label>
+          <div class="input-title">
+            <input class="title-show" rows="1" maxlength="300" id="phone" name="phone" autocomplete="off" type="text" value=" {% if phone %}{{ phone }}{% endif %}" />
+          </div>
         </div>
-      </div>
-      
-      <div class="left-bar-item">
-        <label class="title-select">Phone</label>
-        <div class="input-title">
-          <input class="title-show" rows="1" maxlength="300" id="phone" name="phone" autocomplete="off" type="text"
-                value=" {% if phone %}{{phone }}{% endif %}" />
-        </div>
-      </div>
-      
-      <div class="left-bar-item">
-        <label class="title-select">Email</label>
-        <div class="input-title">
-          <input class="title-show" rows="1" maxlength="300" id="email" name="email" autocomplete="off" type="text"
-                value=" {% if email %}{{email }}{% endif %}" />
-        </div>
-      </div>
-      
-      <div class="left-bar-item">
-        <label class="title-select">Instagram</label>
-        <div class="input-title">
-          <input class="title-show" rows="1" maxlength="300" id="instagram" name="instagram" autocomplete="off" type="text"
-                value=" {% if instagram %}{{instagram }}{% endif %}" />
-        </div>
-      </div>
-      
-      <div class="left-bar-item">
-        <label class="title-select">Property Address</label>
-        <div class="input-title">
-          <input class="title-show" rows="1" maxlength="300" id="propertyaddress" name="propertyaddress" autocomplete="off" type="text"
-                value=" {% if propertyaddress %}{{propertyaddress }}{% endif %}" />
-        </div>
-      </div>
-      
-      <div class="left-bar-item">
-        <label class="title-select">City, State, Zip</label>
-        <div class="input-title">
-          <input class="title-show" rows="1" maxlength="300" id="cityaddress" name="cityaddress" autocomplete="off" type="text"
-                value=" {% if cityaddress %}{{cityaddress }}{% endif %}" />
-        </div>
-      </div>
-      
-      <div class="left-bar-item">
-        <label class="title-select">List Price</label>
-        <div class="input-title">
-          <input class="title-show" rows="1" maxlength="300" id="listprice" name="listprice" autocomplete="off" type="text"
-                value=" {% if listprice %}{{listprice }}{% endif %}" />
-        </div>
-      </div>
 
-      <div class="left-bar-item">
-        <label class="title-select">Description</label>
-        <div class="input-title">
-          <input class="title-show" rows="1" maxlength="300" id="description" name="description" autocomplete="off" type="text"
-                value=" {% if description %}{{description }}{% endif %}" />
+        <div class="left-bar-item">
+          <label class="title-select">Email</label>
+          <div class="input-title">
+            <input class="title-show" rows="1" maxlength="300" id="email" name="email" autocomplete="off" type="text" value=" {% if email %}{{ email }}{% endif %}" />
+          </div>
         </div>
-      </div>
+        <div class="left-bar-item">
+          <label class="title-select">Instagram</label>
+          <div class="input-title">
+            <input class="title-show" rows="1" maxlength="300" id="instagram" name="instagram" autocomplete="off" type="text" value=" {% if instagram %}{{ instagram }}{% endif %}" />
+          </div>
+        </div>
 
-      <div class="left-bar-item div-genbutton">
-        <button class="btn btn-primary" type="submit">Generate<span class="styles_rippleSpan__M7thf"></span></button>
-      </div>
-      
-    </form>
-  </div>
-  <div class="main">
+        <div class="left-bar-item">
+          <label class="title-select">Property Address</label>
+          {% if errors %}
+            <label class="text-danger ml-2">
+              {% if 'propertyaddress' in errors %}
+                {{ errors.propertyaddress }}
+              {% endif %}
+            </label>
+          {% endif %}
+          <div class="input-title">
+            <input class="title-show" rows="1" maxlength="300" id="propertyaddress" name="propertyaddress" autocomplete="off" type="text" value=" {% if propertyaddress %}{{ propertyaddress }}{% endif %}" />
+          </div>
+        </div>
+
+        <div class="left-bar-item">
+          <label class="title-select">City, State, Zip</label>
+          <div class="input-title">
+            <input class="title-show" rows="1" maxlength="300" id="cityaddress" name="cityaddress" autocomplete="off" type="text" value=" {% if cityaddress %}{{ cityaddress }}{% endif %}" />
+          </div>
+        </div>
+
+        <div class="left-bar-item">
+          <label class="title-select">List Price</label>
+          <div class="input-title">
+            <input class="title-show" rows="1" maxlength="300" id="listprice" name="listprice" autocomplete="off" type="text" value=" {% if listprice %}{{ listprice }}{% endif %}" />
+          </div>
+        </div>
+
+        <div class="left-bar-item">
+          <label class="title-select">Description</label>
+          <div class="input-title">
+            <input class="title-show" rows="1" maxlength="300" id="description" name="description" autocomplete="off" type="text" value=" {% if description %}{{ description }}{% endif %}" />
+          </div>
+        </div>
+
+        <div class="left-bar-item div-genbutton">
+          <button class="btn btn-primary" type="submit">Generate<span class="styles_rippleSpan__M7thf"></span></button>
+        </div>
+      </form>
+    </div>
+    <div class="main">
       <div class="result">
         <div class="result-header">
           <p class="message-title">Result</p>
         </div>
         <div class="result-output">
           {% if res_urls %}
-              {% for res_url in res_urls %}
-                <a class="result-urls" href="{{res_url}}">{{ res_url|linebreaks }}</a>
-              {% endfor %}  
+            {% for res_url in res_urls %}
+              <a class="result-urls" href="{{ res_url }}">{{ res_url|linebreaks }}</a>
+            {% endfor %}
           {% endif %}
-          <button type="exp-but" class="btn btn-success" >Export</button>
+          <button type="exp-but" class="btn btn-success">Export</button>
         </div>
       </div>
+    </div>
   </div>
-</div>
-<div class="footer">
-</div>
+  <div class="footer"></div>
 {% endblock %}
