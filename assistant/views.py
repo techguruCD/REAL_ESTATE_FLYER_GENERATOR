@@ -58,8 +58,14 @@ def generate(request):
     print('----------------')
     print(temp)
     print('----------------')
+    print(type(temp))
+    if isinstance(type(temp), list):
+        temp = temp[0]
     if temp.get('zpid') is None:
-        context['errors']['propertyaddress'] = 'Property Address is required'
+        if temp.get('status') is not None:
+            context['errors']['propertyaddress'] = 'Property Address is required'
+        else:
+            context['errors']['res_urls'] = 'No Result'
         return render(request, 'assistant/home.html', context)
     zpid = temp['zpid']
 

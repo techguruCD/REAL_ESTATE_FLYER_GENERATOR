@@ -80,6 +80,11 @@
           <p class="message-title">Result</p>
         </div>
         <div class="result-output">
+          {% if errors and 'res_urls' in errors %}
+            <div>
+              <label>{{ errors.res_urls }}</label>
+            </div>
+          {% endif %}
           {% if res_urls %}
             {% for res_url in res_urls %}
               <a class="result-urls" href="{{ res_url }}">{{ res_url|linebreaks }}</a>
