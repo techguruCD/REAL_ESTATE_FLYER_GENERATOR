@@ -1,4 +1,5 @@
 # importing render and redirect
+import asyncio
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
@@ -18,6 +19,22 @@ cityaddress = ""
 listprice = ""
 description = ""
 
+def generateImage(payload):
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer bb_pr_bbd8d0bffd822b82aaa4c22f4d1eaa'
+    }
+    response = requests.request("POST", "https://api.bannerbear.com/v2/images", headers=headers, data=payload)
+    string = response.json()
+
+    img_uid = string["uid"]
+
+    print(img_uid)
+    time.sleep(3)
+
+    response = requests.request("GET", "https://api.bannerbear.com/v2/images/"+str(img_uid), headers=headers, data="")
+    string = response.json()
+    return string["image_url"]
 
 def generate(request):
     # Get the information from the user input
@@ -88,160 +105,402 @@ def generate(request):
         while len(imgurl_list) < 4:
             imgurl_list.append(imgurl_list[0])
     # Send images and descriptions to bannerbear to create real estate flyers.
-    url = "https://api.bannerbear.com/v2/collections"
-    payload = json.dumps({
-        # "template_set": "V17MYjrN2evrR5eZGv",
-        "template_set": "YpJ2mlgY5pjgMXLjnb",
+    payloads = []
+    payloads.append(json.dumps({        # template 1
+        "template": "BAQGWyDLM6LMbgmENL",
         "modifications": [
             {
-                "name": "background",
+                "name": "BG",
                 "color": None
             },
             {
-                "name": "photo_container",
-                "image_url": imgurl_list[0]
-            },
-            {
-                "name": "logo_container",
-                "image_url": imgurl_list[0]
-            },
-            {
-                "name": "title",
-                "text": None,
+                "name": "heading",
+                "text": name,
                 "color": None,
                 "background": None
             },
             {
-                "name": "rectangle_background",
-                "color": None
-            },
-            {
-                "name": "description",
+                "name": "list",         # 1
                 "text": description,
                 "color": None,
                 "background": None
             },
             {
-                "name": "price_label",
+                "name": "bg-price",
+                "color": None
+            },
+            {
+                "name": "price",        # 1
                 "text": listprice,
                 "color": None,
                 "background": None
             },
             {
-                "name": "contact_details",
-                "text": name+"  "+phone+"  \n"+email+" "+propertyaddress,
+                "name": "address",      # 1
+                "text": propertyaddress + '\n' + cityaddress,
                 "color": None,
                 "background": None
             },
             {
-                "name": "features_list",
-                "text": None,
+                "name": "Contact Us-Heading",   # 1
+                "text": "Contact Us:",
                 "color": None,
                 "background": None
             },
             {
-                "name": "rectangle_border",
-                "color": None
-            },
-            {
-                "name": "image_container1",
-                "image_url": imgurl_list[0]
-            },
-            {
-                "name": "image_container2",
-                "image_url": imgurl_list[1]
-            },
-            {
-                "name": "image_container3",
-                "image_url": imgurl_list[2]
-            },
-            {
-                "name": "image_container4",
-                "image_url": imgurl_list[3]
-            },
-            {
-                "name": "border",
-                "color": None
-            },
-            {
-                "name": "description_title",
-                "text": None,
-                "color": None,
-                "background": None
-            },
-            {
-                "name": "description_text",
-                "text": description,
-                "color": None,
-                "background": None
-            },
-            {
-                "name": "price_text",
-                "text": listprice,
-                "color": None,
-                "background": None
-            },
-            {
-                "name": "propertyfeatures_title",
-                "text": None,
-                "color": None,
-                "background": None
-            },
-            {
-                "name": "propertyfeatures_list",
-                "text": None,
-                "color": None,
-                "background": None
-            },
-            {
-                "name": "photo",
-                "image_url": imgurl_list[0]
-            },
-            {
-                "name": "rectangle_1",
-                "color": None
-            },
-            {
-                "name": "avatar",
-                "image_url": imgurl_list[0]
-            },
-            {
-                "name": "details",
-                "text": None,
-                "color": None,
-                "background": None
-            },
-            {
-                "name": "contact",
-                "text": name+"  "+phone+"  \n"+email+" "+propertyaddress,
+                "name": "contact info",         # 1
+                "text": phone + '\n' + email + '\n' + instagram,
                 "color": None,
                 "background": None
             }
         ],
         "webhook_url": None,
         "metadata": None
-    })
+    }))
+    payloads.append(json.dumps({        # template 2
+        "template": "k4qoBVDy1KOzDzN0gj",
+        "modifications": [
+            {
+                "name": "bg-main",
+                "color": None
+            },
+            {
+                "name": "BG-heading",
+                "color": None
+            },
+            {
+                "name": "corp name",
+                "text": "You can change this text",
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "heading",
+                "text": name,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "list",
+                "text": description,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "bg-price",
+                "color": None
+            },
+            {
+                "name": "price",
+                "text": listprice,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "address",
+                "text": propertyaddress + '\n' + cityaddress,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "contact info - phone",
+                "text": phone,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "contact info - email",
+                "text": email,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "title-1",
+                "text": "Overview",
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "title-2",
+                "text": "You can change this text",
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "line",
+                "color": None,
+                "hide": True
+            },
+            {
+                "name": "title-3",
+                "text": "",
+                "color": None,
+                "background": None,
+                "hide": True
+            },
+            {
+                "name": "text-feature-1",
+                "text": "",
+                "color": None,
+                "background": None,
+                "hide": True
+            },
+            {
+                "name": "text-feature-2",
+                "text": "",
+                "color": None,
+                "background": None,
+                "hide": True
+            },
+            {
+                "name": "text-feature-3",
+                "text": "",
+                "color": None,
+                "background": None,
+                "hide": True
+            },
+            {
+                "name": "title-4",
+                "text": "Contact Details",
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "contact info - website",  # 2
+                "text": instagram,
+                "color": None,
+                "background": None
+            },
+        ],
+        "webhook_url": None,
+        "metadata": None
+    }))
+    payloads.append(json.dumps({        # template 3
+        "template": "V4WN6JDx01vVD3Gqjk",
+        "modifications": [
+            {
+                "name": "BG",
+                "color": None
+            },
+            {
+                "name": "heading",
+                "text": name,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "address",
+                "text": propertyaddress + '\n' + cityaddress,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "contact info - phone",
+                "text": phone,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "contact info - email",
+                "text": email,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "title-footer",
+                "text": "Address",
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "text-feature-1",
+                "text": "",
+                "color": None,
+                "background": None,
+                "hide": True
+            },
+            {
+                "name": "text-feature-2",
+                "text": "",
+                "color": None,
+                "background": None,
+                "hide": True
+            },
+            {
+                "name": "text-feature-3",
+                "text": "",
+                "color": None,
+                "background": None,
+                "hide": True
+            },
+            {
+                "name": "name",
+                "text": "Contact Details",
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "bg-price",
+                "color": None
+            },
+            {
+                "name": "title-1",
+                "text": listprice,
+                "color": None,
+                "background": None
+            },
+        ],
+        "webhook_url": None,
+        "metadata": None
+    }))
+    payloads.append(json.dumps({        # template 4
+        "template": "RnxGpW5lj8PQbEXrJ1",
+        "modifications": [
+            {
+                "name": "heading",
+                "text": name,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "title-1",
+                "text": "For Sale",
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "contact info - phone",
+                "text": phone,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "contact info - email",
+                "text": email,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "sub text",
+                "text": description,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "website",
+                "text": instagram,
+                "color": None,
+                "background": None
+            }
+        ],
+        "webhook_url": None,
+        "metadata": None
+    }))
+    payloads.append(json.dumps({        # template 5
+        "template": "w0kdleZGl7oL5orWxN",
+        "modifications": [
+            {
+                "name": "bg-shape",
+                "color": None
+            },
+            {
+                "name": "heading",
+                "text": name,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "title-1",
+                "text": "Where Dreams Come True",
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "contact info - phone",
+                "text": phone,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "contact info - email",
+                "text": email,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "sub text",
+                "text": description,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "website",
+                "text": instagram,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "rectangle_16",
+                "color": None
+            },
+            {
+                "name": "price-text",
+                "text": "Price",
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "price-number",
+                "text": listprice,
+                "color": None,
+                "background": None
+            },
+            {
+                "name": "website Duplicate 17",
+                "text": "Aenean tristique pulvinar commodo",
+                "color": None,
+                "background": None,
+                "hide": True
+            },
+            {
+                "name": "list",
+                "text": "Vivamus ullamcorper odio felis in finibus",
+                "color": None,
+                "background": None,
+                "hide": True
+            },
+            {
+                "name": "contact info - phone Duplicate 19",
+                "text": "Book Now",
+                "color": None,
+                "background": None
+            }
+        ],
+        "webhook_url": None,
+        "metadata": None
+    }))
+    res_urls = []
     headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer bb_pr_bbd8d0bffd822b82aaa4c22f4d1eaa'
     }
+    res_urls.append(generateImage(payloads[0]))
+    res_urls.append(generateImage(payloads[1]))
+    res_urls.append(generateImage(payloads[2]))
+    res_urls.append(generateImage(payloads[3]))
+    res_urls.append(generateImage(payloads[4]))
+    # for payload in payloads:
+    #     response = requests.request("POST", "https://api.bannerbear.com/v2/images", headers=headers, data=payload)
+    #     string = response.json()
 
-    response = requests.request("POST", url, headers=headers, data=payload)
-    string = response.json()
-    img_uid = string["uid"]
-    print(img_uid)
-    time.sleep(5)
-    url = "https://api.bannerbear.com/v2/collections/"+str(img_uid)
+    #     img_uid = string["uid"]
 
-    payload = ""
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer bb_pr_bbd8d0bffd822b82aaa4c22f4d1eaa'
-    }
+    #     print(img_uid)
+    #     time.sleep(5)
 
-    response = requests.request("GET", url, headers=headers, data=payload)
-    string = response.json()
-    res_urls = list(string["image_urls"].values())
+    #     response = requests.request("GET", "https://api.bannerbear.com/v2/images/"+str(img_uid), headers=headers, data="")
+    #     string = response.json()
+    #     res_urls.append(string["image_url"])
     context['res_urls'] = res_urls
     return render(request, 'assistant/home.html', context)
 
