@@ -30,12 +30,14 @@ def generateImage(payload):
     img_uid = string["uid"]
 
     print(img_uid)
-    while True:
+    limit = 5
+    while limit > 0:
         time.sleep(1)
         response = requests.request("GET", "https://api.bannerbear.com/v2/images/"+str(img_uid), headers=headers, data="")
         string = response.json()
         if string["image_url"] is not None:
             return string["image_url"]
+        limit -= 1
     return None
 
 def generate(request):
