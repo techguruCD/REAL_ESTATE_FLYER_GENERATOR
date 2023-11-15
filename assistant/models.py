@@ -1,4 +1,3 @@
-from django.core.files.base import ContentFile
 from django.db import models
 import os
 from datetime import datetime
