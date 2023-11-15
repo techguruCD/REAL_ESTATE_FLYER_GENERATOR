@@ -311,7 +311,7 @@ def generate(request):
         "template": "V4WN6JDx01vVD3Gqjk",
         "modifications": [
             {
-                "name": "big-img-mask",
+                "name": "hero-image",
                 "image_url": thumb_url
             },
             {
@@ -440,7 +440,7 @@ def generate(request):
         "template": "w0kdleZGl7oL5orWxN",
         "modifications": [
             {
-                "name": "hero-image",
+                "name": "big-img-mask",
                 "image_url": thumb_url
             },
             {
