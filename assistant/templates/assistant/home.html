@@ -6,7 +6,17 @@
   <div class="header"></div>
   <div class="content">
     <div class="left">
+      <form class='upload-form' action="/upload_image/" method="POST">
+        <input class="thumb_input" style="display:none" name='thumb_url' type="file">
+      </form>
       <form action="/generate/" method="POST">
+        <div class="left-bar-item">
+          <label class="title-select">Image</label>
+          <div class="w-100 border d-flex rounded" style="min-height: 50px;">
+            <img class="thumb-preview w-100 h-100" src="{% if thumb_url %}{{thumb_url}}{% else %}/static/icons8-image-64.png{% endif %}">
+          </div>
+        </div>
+        <input class="thumb_url" type="hidden" value="{% if thumb_url %}{{thumb_url}}{% endif %}" name="thumb_url">
         <div class="left-bar-item">
           <label class="title-select">Name</label>
           <div class="input-title">

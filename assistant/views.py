@@ -1,7 +1,7 @@
 # importing render and redirect
 import asyncio
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 # importing the libraries
 import os
@@ -9,6 +9,10 @@ import json
 import requests
 import ast
 import time
+
+from datetime import datetime
+from .forms import UploadFileForm, FileUploadForm
+from .models import UploadModel
 
 name = ""
 phone = ""
@@ -18,6 +22,18 @@ propertyaddress = ""
 cityaddress = ""
 listprice = ""
 description = ""
+
+def upload_image(request):
+    if request.method == "POST":
+        print(request.FILES)
+        uploadModel = UploadModel()
+        _, file = request.FILES.popitem()
+        file = file[0]
+        print(file)
+        uploadModel.file = file
+        uploadModel.save()
+        print(uploadModel.file)
+        return JsonResponse({'thumb_url': str(uploadModel.file)}, status=200)
 
 def generateImage(payload):
     headers = {
@@ -50,6 +66,9 @@ def generate(request):
     cityaddress = request.POST.get('cityaddress')
     listprice = request.POST.get('listprice')
     description = request.POST.get('description')
+    thumb_url = request.POST.get('thumb_url')
+    print('-----------')
+    print(thumb_url)
 
     context = {
         'name': name,
@@ -61,6 +80,7 @@ def generate(request):
         'listprice': listprice,
         'description': description,
         'errors': {},
+        'thumb_url': thumb_url,
         'res_urls': []
     }
 
@@ -114,6 +134,10 @@ def generate(request):
         "template": "BAQGWyDLM6LMbgmENL",
         "modifications": [
             {
+                "name": "hero-image",
+                "image_url": thumb_url
+            },
+            {
                 "name": "BG",
                 "color": None
             },
@@ -164,6 +188,10 @@ def generate(request):
     payloads.append(json.dumps({        # template 2
         "template": "k4qoBVDy1KOzDzN0gj",
         "modifications": [
+            {
+                "name": "hero-image",
+                "image_url": thumb_url
+            },
             {
                 "name": "bg-main",
                 "color": None
@@ -283,6 +311,10 @@ def generate(request):
         "template": "V4WN6JDx01vVD3Gqjk",
         "modifications": [
             {
+                "name": "big-img-mask",
+                "image_url": thumb_url
+            },
+            {
                 "name": "BG",
                 "color": None
             },
@@ -361,6 +393,10 @@ def generate(request):
         "template": "RnxGpW5lj8PQbEXrJ1",
         "modifications": [
             {
+                "name": "head",
+                "image_url": thumb_url
+            },
+            {
                 "name": "heading",
                 "text": name,
                 "color": None,
@@ -403,6 +439,10 @@ def generate(request):
     payloads.append(json.dumps({        # template 5
         "template": "w0kdleZGl7oL5orWxN",
         "modifications": [
+            {
+                "name": "hero-image",
+                "image_url": thumb_url
+            },
             {
                 "name": "bg-shape",
                 "color": None
