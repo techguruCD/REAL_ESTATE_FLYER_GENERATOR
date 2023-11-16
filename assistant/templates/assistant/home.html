@@ -10,7 +10,7 @@
         <input class="thumb_input" style="display:none" name='image' type="file">
       </form>
       <form action="/generate/" method="POST">
-        <div class="left-bar-item">
+        <div class="left-bar-item" style="display:none;">
           <label class="title-select">Image</label>
           <div class="w-100 border d-flex rounded" style="min-height: 50px;">
             <img class="thumb-preview w-100 h-100" src="{% if thumb_url %}{{thumb_url}}{% else %}/static/icons8-image-64.png{% endif %}">

@@ -112,6 +112,8 @@ def generate(request):
     if len(imgurl_list) < 4:
         while len(imgurl_list) < 4:
             imgurl_list.append(imgurl_list[0])
+    print ('imageurl')
+    print (imgurl_list)
     # Send images and descriptions to bannerbear to create real estate flyers.
     payloads = []
     payloads.append(json.dumps({        # template 1
@@ -119,7 +121,15 @@ def generate(request):
         "modifications": [
             {
                 "name": "hero-image",
-                "image_url": thumb_url
+                "image_url": imgurl_list[0]
+            },
+            {
+                "name": "image_8",
+                "image_url": imgurl_list[1]
+            },
+            {
+                "name": "image_9",
+                "image_url": imgurl_list[2]
             },
             {
                 "name": "BG",
@@ -174,7 +184,19 @@ def generate(request):
         "modifications": [
             {
                 "name": "hero-image",
-                "image_url": thumb_url
+                "image_url": imgurl_list[0]
+            },
+            {
+                "name": "image_8",
+                "image_url": imgurl_list[1]
+            },
+            {
+                "name": "image_9",
+                "image_url": imgurl_list[2]
+            },
+            {
+                "name": "image_10",
+                "image_url": imgurl_list[3]
             },
             {
                 "name": "bg-main",
@@ -296,7 +318,19 @@ def generate(request):
         "modifications": [
             {
                 "name": "hero-image",
-                "image_url": thumb_url
+                "image_url": imgurl_list[0]
+            },
+            {
+                "name": "image_8",
+                "image_url": imgurl_list[1]
+            },
+            {
+                "name": "image_9",
+                "image_url": imgurl_list[2]
+            },
+            {
+                "name": "image_10",
+                "image_url": imgurl_list[3]
             },
             {
                 "name": "BG",
@@ -378,7 +412,19 @@ def generate(request):
         "modifications": [
             {
                 "name": "head",
-                "image_url": thumb_url
+                "image_url": imgurl_list[0]
+            },
+            {
+                "name": "image_8",
+                "image_url": imgurl_list[1]
+            },
+            {
+                "name": "image_9",
+                "image_url": imgurl_list[2]
+            },
+            {
+                "name": "image_10",
+                "image_url": imgurl_list[3]
             },
             {
                 "name": "heading",
@@ -424,8 +470,8 @@ def generate(request):
         "template": "w0kdleZGl7oL5orWxN",
         "modifications": [
             {
-                "name": "big-img-mask",
-                "image_url": thumb_url
+                "name": "Biggest image",
+                "image_url": imgurl_list[0]
             },
             {
                 "name": "bg-shape",
