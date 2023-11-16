@@ -7,7 +7,7 @@
   <div class="content">
     <div class="left">
       <form class='upload-form' action="/upload_image/" method="POST">
-        <input class="thumb_input" style="display:none" name='thumb_url' type="file">
+        <input class="thumb_input" style="display:none" name='image' type="file">
       </form>
       <form action="/generate/" method="POST">
         <div class="left-bar-item">
@@ -97,13 +97,16 @@
           {% endif %}
           {% if res_urls %}
             {% for res_url in res_urls %}
-              <a class="result-urls" href="{{ res_url }}">{{ res_url|linebreaks }}</a>
+              <a target="_blank" class="result-urls" href="{{ res_url }}">{{ res_url|linebreaks }}</a>
             {% endfor %}
           {% endif %}
           <button type="exp-but" class="btn btn-success">Export</button>
         </div>
       </div>
     </div>
+  </div>
+  <div class='spinner position-fixed' style="background-color: #3b3b3b87; z-index:100; top: 0; right: 0; bottom: 0; left: 0; display:none">
+    <div class="d-flex w-100 h-100 justify-content-center align-items-center"><div style="color: white; font-size: 20pt;">Uploading...</div></div>
   </div>
   <div class="footer"></div>
 {% endblock %}
