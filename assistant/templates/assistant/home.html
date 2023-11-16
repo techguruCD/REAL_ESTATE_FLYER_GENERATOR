@@ -6,31 +6,41 @@
   <div class="header"></div>
   <div class="content">
     <div class="left">
+      <form class='upload-form' action="/upload_image/" method="POST">
+        <input class="thumb_input" style="display:none" name='image' type="file">
+      </form>
       <form action="/generate/" method="POST">
+        <div class="left-bar-item">
+          <label class="title-select">Image</label>
+          <div class="w-100 border d-flex rounded" style="min-height: 50px;">
+            <img class="thumb-preview w-100 h-100" src="{% if thumb_url %}{{thumb_url}}{% else %}/static/icons8-image-64.png{% endif %}">
+          </div>
+        </div>
+        <input class="thumb_url" type="hidden" value="{% if thumb_url %}{{thumb_url}}{% endif %}" name="thumb_url">
         <div class="left-bar-item">
           <label class="title-select">Name</label>
           <div class="input-title">
-            <input class="title-show" rows="1" maxlength="300" id="name" name="name" autocomplete="off" type="text" value=" {% if name %}{{ name }}{% endif %}" />
+            <input class="title-show" rows="1" maxlength="300" id="name" name="name" autocomplete="off" type="text" value="{% if name %}{{ name }}{% endif %}" />
           </div>
         </div>
 
         <div class="left-bar-item">
           <label class="title-select">Phone</label>
           <div class="input-title">
-            <input class="title-show" rows="1" maxlength="300" id="phone" name="phone" autocomplete="off" type="text" value=" {% if phone %}{{ phone }}{% endif %}" />
+            <input class="title-show" rows="1" maxlength="300" id="phone" name="phone" autocomplete="off" type="text" value="{% if phone %}{{ phone }}{% endif %}" />
           </div>
         </div>
 
         <div class="left-bar-item">
           <label class="title-select">Email</label>
           <div class="input-title">
-            <input class="title-show" rows="1" maxlength="300" id="email" name="email" autocomplete="off" type="text" value=" {% if email %}{{ email }}{% endif %}" />
+            <input class="title-show" rows="1" maxlength="300" id="email" name="email" autocomplete="off" type="text" value="{% if email %}{{ email }}{% endif %}" />
           </div>
         </div>
         <div class="left-bar-item">
           <label class="title-select">Instagram</label>
           <div class="input-title">
-            <input class="title-show" rows="1" maxlength="300" id="instagram" name="instagram" autocomplete="off" type="text" value=" {% if instagram %}{{ instagram }}{% endif %}" />
+            <input class="title-show" rows="1" maxlength="300" id="instagram" name="instagram" autocomplete="off" type="text" value="{% if instagram %}{{ instagram }}{% endif %}" />
           </div>
         </div>
 
@@ -44,28 +54,28 @@
             </label>
           {% endif %}
           <div class="input-title">
-            <input class="title-show" rows="1" maxlength="300" id="propertyaddress" name="propertyaddress" autocomplete="off" type="text" value=" {% if propertyaddress %}{{ propertyaddress }}{% endif %}" />
+            <input class="title-show" rows="1" maxlength="300" id="propertyaddress" name="propertyaddress" autocomplete="off" type="text" value="{% if propertyaddress %}{{ propertyaddress }}{% endif %}" />
           </div>
         </div>
 
         <div class="left-bar-item">
           <label class="title-select">City, State, Zip</label>
           <div class="input-title">
-            <input class="title-show" rows="1" maxlength="300" id="cityaddress" name="cityaddress" autocomplete="off" type="text" value=" {% if cityaddress %}{{ cityaddress }}{% endif %}" />
+            <input class="title-show" rows="1" maxlength="300" id="cityaddress" name="cityaddress" autocomplete="off" type="text" value="{% if cityaddress %}{{ cityaddress }}{% endif %}" />
           </div>
         </div>
 
         <div class="left-bar-item">
           <label class="title-select">List Price</label>
           <div class="input-title">
-            <input class="title-show" rows="1" maxlength="300" id="listprice" name="listprice" autocomplete="off" type="text" value=" {% if listprice %}{{ listprice }}{% endif %}" />
+            <input class="title-show" rows="1" maxlength="300" id="listprice" name="listprice" autocomplete="off" type="text" value="{% if listprice %}{{ listprice }}{% endif %}" />
           </div>
         </div>
 
         <div class="left-bar-item">
           <label class="title-select">Description</label>
           <div class="input-title">
-            <input class="title-show" rows="1" maxlength="300" id="description" name="description" autocomplete="off" type="text" value=" {% if description %}{{ description }}{% endif %}" />
+            <input class="title-show" rows="1" maxlength="300" id="description" name="description" autocomplete="off" type="text" value="{% if description %}{{ description }}{% endif %}" />
           </div>
         </div>
 
@@ -87,13 +97,16 @@
           {% endif %}
           {% if res_urls %}
             {% for res_url in res_urls %}
-              <a class="result-urls" href="{{ res_url }}">{{ res_url|linebreaks }}</a>
+              <a target="_blank" class="result-urls" href="{{ res_url }}">{{ res_url|linebreaks }}</a>
             {% endfor %}
           {% endif %}
           <button type="exp-but" class="btn btn-success">Export</button>
         </div>
       </div>
     </div>
+  </div>
+  <div class='spinner position-fixed' style="background-color: #3b3b3b87; z-index:100; top: 0; right: 0; bottom: 0; left: 0; display:none">
+    <div class="d-flex w-100 h-100 justify-content-center align-items-center"><div style="color: white; font-size: 20pt;">Uploading...</div></div>
   </div>
   <div class="footer"></div>
 {% endblock %}
