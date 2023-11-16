@@ -9,7 +9,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.home, name='home'),
     path('new_chat/', views.new_chat, name='new_chat'),
-    path('upload_image/', views.upload_image, name='upload_image'),
     path('generate/', views.generate, name='generate'),
     path('error-handler/', views.error_handler, name='error_handler'),
 ]

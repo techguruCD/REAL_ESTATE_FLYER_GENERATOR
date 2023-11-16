@@ -10,10 +10,6 @@ import requests
 import ast
 import time
 
-from datetime import datetime
-from .forms import UploadFileForm, FileUploadForm
-from .models import UploadModel
-
 name = ""
 phone = ""
 email = ""
@@ -22,18 +18,6 @@ propertyaddress = ""
 cityaddress = ""
 listprice = ""
 description = ""
-
-def upload_image(request):
-    if request.method == "POST":
-        print(request.FILES)
-        uploadModel = UploadModel()
-        _, file = request.FILES.popitem()
-        file = file[0]
-        print(file)
-        uploadModel.file = file
-        uploadModel.save()
-        print(uploadModel.file)
-        return JsonResponse({'thumb_url': str(uploadModel.file)}, status=200)
 
 def generateImage(payload):
     headers = {
